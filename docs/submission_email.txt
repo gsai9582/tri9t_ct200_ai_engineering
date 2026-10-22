@@ -1,0 +1,38 @@
+Subject: Submission: AI Engineering Internship Assignment (CT-200 Medical Device Pipeline) - Sai
+
+Hi Tri9T Team,
+
+Thank you for the opportunity to work on this assignment. I have completed the CardioTrack CT-200 technical manual ingestion, versioned hierarchy, QA generation, and stale traceability system.
+
+Here are the links to my deliverables:
+- GitHub Repository: https://github.com/<your-username>/tri9t_ct200_ai_engineering
+- Approach Document & Decision Log: https://github.com/<your-username>/tri9t_ct200_ai_engineering/blob/main/docs/approach.md
+
+Key highlights of my implementation:
+1. Irregularity-Tolerant Hierarchy Reconstruction:
+   - Built a stack-based parser that handles the specific structural variations in the CT-200 manuals: skipped subsection depth (2.1.1.1 under 2.1), non-monotonic section orders (3.4 before 3.3), duplicate headings (4.2 Error Codes vs 7.1 Error Codes), and cross-page text continuation (3.1 across p2-p3, 8.1 across p6-p7).
+   - Integrated layout-aware table extraction using PyMuPDF (page.find_tables()), formatting tables as structured Markdown grids and isolating text blocks from table bounding boxes.
+   - Handled Unicode ligatures (fi, ff, fl) and non-breaking hyphens with NFKD normalization.
+
+2. Document Versioning & Logical Matching:
+   - Re-ingesting v2 alongside v1 preserves version 1 immutably, identifying 24 unchanged nodes, 4 modified nodes (Battery Life, Cuff Inflation Sequence, Error Codes, and Alarm Thresholds), and 1 added node (5.3 Data Export).
+   - Logical node identity is maintained via hierarchical path hashing with occurrence disambiguation.
+   - Surfaces lightweight diff summaries via GET /nodes/{node_id}/changes.
+
+3. Version-Pinned Selections & Defensive LLM Generation:
+   - Selections snapshot exact version, text, and SHA-256 hashes, ensuring older selections never mutate when new versions are ingested.
+   - Enforces strict Pydantic validation (GeneratedTestCase) with bounded retries.
+   - Implements an idempotency policy using selection content hash fingerprints.
+   - Provides a deterministic local fallback labeled explicitly when unconfigured or offline.
+
+4. Queryable Staleness Detection:
+   - The retrieval API (GET /generations) dynamically evaluates source node traceability against the latest ingested version, flagging changed nodes as "stale" with old vs current hashes, while keeping unchanged nodes "current".
+
+5. Verification & Tests:
+   - Includes 20 automated tests in pytest covering parser edge cases, versioning diffs, Pydantic validation, selection immutability, and end-to-end API workflows.
+   - A standalone verification script (python scripts/demo_version_flow.py) runs the entire v1 -> browse -> selection -> generation -> v2 re-ingestion -> diff -> staleness lifecycle in seconds.
+
+I have thoroughly documented my engineering rationale, known failure modes, and answers to the Decision Log in docs/approach.md. I look forward to walking you through my code and discussing the architecture in the next round.
+
+Best regards,
+Sai
