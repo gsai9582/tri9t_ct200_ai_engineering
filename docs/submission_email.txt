@@ -5,8 +5,9 @@ Hi Tri9T Team,
 Thank you for the opportunity to work on this assignment. I have completed the CardioTrack CT-200 technical manual ingestion, versioned hierarchy, QA generation, and stale traceability system.
 
 Here are the links to my deliverables:
-- GitHub Repository: https://github.com/<your-username>/tri9t_ct200_ai_engineering
-- Approach Document & Decision Log: https://github.com/<your-username>/tri9t_ct200_ai_engineering/blob/main/docs/approach.md
+- GitHub Repository: https://github.com/gsai9582/tri9t_ct200_ai_engineering
+- Approach Document & Decision Log: https://github.com/gsai9582/tri9t_ct200_ai_engineering/blob/main/docs/approach.md
+
 
 Key highlights of my implementation:
 1. Irregularity-Tolerant Hierarchy Reconstruction:
